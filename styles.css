@@ -1,27 +1,60 @@
 /* ------------------ GLOBAL STYLE ------------------ */
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     margin: 0;
-    background: #0d0f19;
+    background: #05070a;
     font-family: 'IBM Plex Mono', monospace, sans-serif;
     color: #e8f0ff;
+    overflow-x: hidden;
 }
 
-/* Background glow animation */
+/* Enhanced Background glow animation */
 body::before {
     content: '';
     position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 20% 30%, rgba(0,240,255,0.08), transparent),
-                radial-gradient(circle at 80% 70%, rgba(255,0,230,0.07), transparent);
-    animation: floatBg 14s ease-in-out infinite alternate;
+    inset: -50%;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.15), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(180, 0, 255, 0.12), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 170, 0.05), transparent 60%);
+    animation: floatBg 20s ease-in-out infinite alternate;
     pointer-events: none;
+    z-index: -1;
+    filter: blur(60px);
 }
 
 @keyframes floatBg {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(20px, -20px); }
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(30px, -30px) rotate(2deg);
+    }
+
+    100% {
+        transform: translate(-20px, 20px) rotate(-2deg);
+    }
+}
+
+/* Water Ripple Effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    background: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 
 /* ------------------ NAVBAR ------------------ */
@@ -40,7 +73,10 @@ nav {
     z-index: 30;
 }
 
-.nav-left { display: flex; align-items: center; }
+.nav-left {
+    display: flex;
+    align-items: center;
+}
 
 .nav-logo {
     width: 42px;
@@ -51,7 +87,10 @@ nav {
     box-shadow: 0 0 10px #00d4ff;
 }
 
-.nav-right { display: flex; gap: 32px; }
+.nav-right {
+    display: flex;
+    gap: 32px;
+}
 
 .nav-right a {
     color: #cfe2ff;
@@ -62,7 +101,7 @@ nav {
 }
 
 .nav-right a:hover {
-    color: #00d4ff; 
+    color: #00d4ff;
     text-shadow: 0 0 6px #00d4ff;
 }
 
@@ -71,7 +110,8 @@ nav {
     position: fixed;
     top: 0;
     right: 0;
-    width: 90px; height: 90px;
+    width: 90px;
+    height: 90px;
     background: #042842;
     clip-path: polygon(100% 0, 0 0, 100% 100%);
     z-index: 40;
@@ -79,14 +119,19 @@ nav {
 
 .github-corner .github-icon {
     position: absolute;
-    top: 12px; right: 12px;
-    width: 32px; height: 32px;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     filter: drop-shadow(0 0 4px #00d4ff);
     transition: 0.25s;
     cursor: pointer;
 }
-.github-corner .github-icon:hover { filter: drop-shadow(0 0 12px #07cbf3); }
+
+.github-corner .github-icon:hover {
+    filter: drop-shadow(0 0 12px #07cbf3);
+}
 
 /* ------------------ LANDING ------------------ */
 .landing {
@@ -114,12 +159,25 @@ nav {
 }
 
 @keyframes blink {
-    0%, 50% { opacity: 1; }
-    50%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
 }
 
-.hidden { opacity: 0; }
-#subtitle { transition: opacity 1.2s ease; }
+.hidden {
+    opacity: 0;
+}
+
+#subtitle {
+    transition: opacity 1.2s ease;
+}
 
 /* ------------------ SECTIONS ------------------ */
 section {
@@ -144,8 +202,13 @@ section {
 }
 
 @keyframes flow {
-    from { stroke-dashoffset: 0; }
-    to { stroke-dashoffset: -18; }
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: -18;
+    }
 }
 
 .signal-dot {
@@ -163,22 +226,51 @@ section {
     fill: #091426;
     stroke: #00aaff;
     stroke-width: 3;
-    filter: drop-shadow(0 0 8px rgba(0,170,255,0.5));
+    filter: drop-shadow(0 0 8px rgba(0, 170, 255, 0.5));
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Dropout Effect on Hover */
+.hidden-neuron:hover,
+.neuron-node:hover {
+    opacity: 0.3;
+    filter: blur(2px) grayscale(100%);
+    transform: scale(0.9);
 }
 
 /* Neuron glow */
 @keyframes neuronPulse {
-    0% { filter: drop-shadow(0 0 4px #00d4ff); }
-    50% { filter: drop-shadow(0 0 16px #00d4ff); }
-    100% { filter: drop-shadow(0 0 4px #00d4ff); }
+    0% {
+        filter: drop-shadow(0 0 4px #00d4ff);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 16px #00d4ff);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 4px #00d4ff);
+    }
 }
-.active-neuron-glow { animation: neuronPulse 3s ease-in-out infinite; }
+
+.active-neuron-glow {
+    animation: neuronPulse 3s ease-in-out infinite;
+}
 
 /* Activation & Step glowing */
 @keyframes glowPulse {
-    0% { filter: drop-shadow(0 0 2px rgba(120,200,255,0.4)); }
-    50% { filter: drop-shadow(0 0 10px rgba(160,230,255,0.9)); }
-    100% { filter: drop-shadow(0 0 2px rgba(120,200,255,0.4)); }
+    0% {
+        filter: drop-shadow(0 0 2px rgba(120, 200, 255, 0.4));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 10px rgba(160, 230, 255, 0.9));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 2px rgba(120, 200, 255, 0.4));
+    }
 }
 
 #activation-node,
@@ -215,29 +307,39 @@ section {
 }
 
 .diagram-box {
-    background: #0b1224;
-    border: 1px solid #294a88;
+    background: rgba(11, 18, 36, 0.6);
+    border: 1px solid rgba(41, 74, 136, 0.5);
     border-radius: 14px;
     padding: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    box-shadow: 0 0 30px rgba(80, 140, 255, 0.25);
-    transition: 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 100%;
     max-width: 900px;
     margin: 30px auto;
     overflow-x: auto;
+    position: relative;
+    overflow: hidden;
+    /* For ripple containment */
 }
-.diagram-box:hover { box-shadow: 0 0 35px rgba(120,180,255,0.45); }
 
-.diagram-box svg, 
+.diagram-box:hover {
+    box-shadow: 0 15px 45px rgba(0, 212, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: rgba(0, 212, 255, 0.6);
+}
+
+.diagram-box svg,
 .perceptron-visual svg {
     max-width: 100%;
     height: auto;
     display: block;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 /* EXAMPLE SECTION */
@@ -258,7 +360,12 @@ section {
     gap: 30px;
     margin-top: 12px;
 }
-.row p, .row ul, .row .formula { width: 48%; }
+
+.row p,
+.row ul,
+.row .formula {
+    width: 48%;
+}
 
 /* Math formatting */
 .formula {
@@ -274,21 +381,37 @@ section {
 }
 
 /* Collapsible Math Section */
-.math-toggle,.math-toggle1 { text-align: center; margin-top: 40px; cursor: pointer; }
-.math-toggle-text,.math-toggle-text1 { color: #7ab8ff; font-size: 18px; transition: 0.3s; }
-.math-toggle-text:hover { color: #a8d4ff; }
+.math-toggle,
+.math-toggle1 {
+    text-align: center;
+    margin-top: 40px;
+    cursor: pointer;
+}
 
-.math-section,.math-section1 {
+.math-toggle-text,
+.math-toggle-text1 {
+    color: #7ab8ff;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.math-toggle-text:hover {
+    color: #a8d4ff;
+}
+
+.math-section,
+.math-section1 {
     display: none;
     margin-top: 20px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 20px 30px;
     width: 80%;
     margin-inline: auto;
     backdrop-filter: blur(4px);
 }
+
 .scene-box {
     background: #0b1224;
     border: 1px solid #294a88;
@@ -297,7 +420,7 @@ section {
     max-width: 850px;
     margin: 45px auto;
     line-height: 1.6;
-    box-shadow: 0 0 25px rgba(80,140,255,0.25);
+    box-shadow: 0 0 25px rgba(80, 140, 255, 0.25);
     transition: 0.3s ease;
 }
 
@@ -342,9 +465,17 @@ section {
 }
 
 @keyframes lossPulse {
-    0% { filter: drop-shadow(0 0 2px #ff6290); }
-    50% { filter: drop-shadow(0 0 12px #ff6290); }
-    100% { filter: drop-shadow(0 0 2px #ff6290); }
+    0% {
+        filter: drop-shadow(0 0 2px #ff6290);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 12px #ff6290);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 2px #ff6290);
+    }
 }
 
 .loss-text {
@@ -363,28 +494,22 @@ section {
 }
 
 @keyframes errorPulse {
-    0%   { filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.4)); }
-    50%  { filter: drop-shadow(0 0 14px rgba(255, 80, 120, 1)); }
-    100% { filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.4)); }
+    0% {
+        filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.4));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 14px rgba(255, 80, 120, 1));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.4));
+    }
 }
 
 .y-hat-error {
     fill: #ff6f96;
     font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 80, 120, 0.9);
-    animation: yGlow 2.2s ease-in-out infinite;
-}
-
-@keyframes yGlow {
-    0%   { opacity: 0.75; text-shadow: 0 0 4px rgba(255, 80, 120, 0.4)); }
-    50%  { opacity: 1;    text-shadow: 0 0 16px rgba(255, 80, 120, 1)); }
-    100% { opacity: 0.75; text-shadow: 0 0 4px rgba(255, 80, 120, 0.4)); }
-}
-
-/* Backward error wave */
-.error-backflow {
-    stroke: #ff6d8a;
     stroke-width: 3;
     fill: none;
     stroke-dasharray: 6;
@@ -393,8 +518,13 @@ section {
 }
 
 @keyframes reverseFlow {
-    from { stroke-dashoffset: 0; }
-    to { stroke-dashoffset: 20; }
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: 20;
+    }
 }
 
 .hidden-neuron.error-receive {
@@ -402,9 +532,17 @@ section {
 }
 
 @keyframes receivePulse {
-    0%   { filter: drop-shadow(0 0 3px rgba(255,80,120,0.3)); }
-    50%  { filter: drop-shadow(0 0 14px rgba(255,80,120,1)); }
-    100% { filter: drop-shadow(0 0 3px rgba(255,80,120,0.3)); }
+    0% {
+        filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 14px rgba(255, 80, 120, 1));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 3px rgba(255, 80, 120, 0.3));
+    }
 }
 
 .pause-forward .signal-dot {
@@ -424,10 +562,12 @@ section {
         stroke: #ff4d6d;
         filter: drop-shadow(0 0 12px rgba(255, 80, 120, 1));
     }
+
     50% {
         stroke: #00d4ff;
         filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.95));
     }
+
     100% {
         stroke: #ff4d6d;
         filter: drop-shadow(0 0 12px rgba(255, 80, 120, 1));
@@ -444,57 +584,34 @@ section {
 
 /* Loss Bar */
 .loss-meter {
-  width: 250px;
-  height: 12px;
-  background: #2a334d;
-  border-radius: 8px;
-  margin: 14px auto 6px auto;
-  overflow: hidden;
+    width: 250px;
+    height: 12px;
+    background: #2a334d;
+    border-radius: 8px;
+    margin: 14px auto 6px auto;
+    overflow: hidden;
 }
 
 .loss-fill {
-  width: 100%;
-  height: 100%;
-  background: #ff3b5f;
-  transition: width 1.5s ease, background 1.5s ease;
+    width: 100%;
+    height: 100%;
+    background: #ff3b5f;
+    transition: width 1.5s ease, background 1.5s ease;
 }
 
 .training-output {
-  animation: learnPulse 3.5s infinite ease-in-out;
+    animation: learnPulse 3.5s infinite ease-in-out;
 }
 
 .loss-value {
-  text-align: center;
-  color: #bcd4ff;
-  margin-top: 4px;
+    text-align: center;
+    color: #bcd4ff;
+    margin-top: 4px;
 }
+
 .train-controls {
-  text-align: center;
-  margin-top: 12px;
-}
-
-#train-toggle {
-  background: #0d162b;
-  border: 1px solid #00d4ff;
-  color: #cfeaff;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-#train-toggle:hover {
-  background: #001a33;
-  box-shadow: 0 0 10px #00d4ff;
-}
-footer {
-  text-align: center;
-  color: #7ab8ff;
-  padding: 30px 0;
-  border-top: 1px solid #1e3c72;
-  background: #0b1224;
-  font-size: 14px;
+    background: #0b1224;
+    font-size: 14px;
 }
 
 /* ------------------ RESPONSIVENESS ------------------ */
@@ -506,15 +623,20 @@ footer {
         flex-direction: column;
         text-align: center;
     }
-    .perceptron-text, 
+
+    .perceptron-text,
     .perceptron-visual {
         width: 90%;
     }
+
     .row {
         flex-direction: column;
         gap: 20px;
     }
-    .row p, .row ul, .row .formula {
+
+    .row p,
+    .row ul,
+    .row .formula {
         width: 100%;
     }
 }
@@ -535,7 +657,7 @@ footer {
         gap: 24px;
     }
 
-    .perceptron-text, 
+    .perceptron-text,
     .perceptron-visual {
         width: 100%;
         text-align: center;
@@ -568,20 +690,47 @@ footer {
 
 /* Extra small (≤480px) */
 @media (max-width: 480px) {
-    #title { font-size: 1.8rem; }
-    #subtitle { font-size: 0.95rem; }
-    .perceptron-text { font-size: 14px; line-height: 1.5; }
-    .diagram-box { padding: 12px; }
+    #title {
+        font-size: 1.8rem;
+    }
+
+    #subtitle {
+        font-size: 0.95rem;
+    }
+
+    .perceptron-text {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .diagram-box {
+        padding: 12px;
+    }
 }
+
 /* ------------------ TEXT RESPONSIVENESS FIX ------------------ */
 
 html {
     font-size: 16px;
 }
 
-@media (max-width: 1024px) { html { font-size: 15px; } }
-@media (max-width: 768px) { html { font-size: 14px; } }
-@media (max-width: 480px) { html { font-size: 13px; } }
+@media (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+}
 
 #title {
     font-size: clamp(1.8rem, 6vw, 3rem);
@@ -591,7 +740,10 @@ html {
     font-size: clamp(0.9rem, 3.5vw, 1.2rem);
 }
 
-p, li, .scene-desc, .perceptron-text {
+p,
+li,
+.scene-desc,
+.perceptron-text {
     font-size: clamp(0.9rem, 2.8vw, 1rem);
     line-height: 1.7;
 }
@@ -600,9 +752,11 @@ p, li, .scene-desc, .perceptron-text {
     font-size: clamp(1.1rem, 3.5vw, 1.5rem);
 }
 
-.math-section, .math-section1 {
+.math-section,
+.math-section1 {
     font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
+
 @media (max-width: 600px) {
     .scene-box {
         padding: 18px;

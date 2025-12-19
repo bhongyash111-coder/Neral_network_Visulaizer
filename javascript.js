@@ -1,46 +1,46 @@
 function typeLetter() {
-    titleElement.textContent = text.slice(0, index);
-    index++;
+  titleElement.textContent = text.slice(0, index);
+  index++;
 
-    if (index <= text.length) {
-        setTimeout(typeLetter, 65);
-    } else {
-        document.getElementById("subtitle").style.opacity = 1;
-    }
+  if (index <= text.length) {
+    setTimeout(typeLetter, 65);
+  } else {
+    document.getElementById("subtitle").style.opacity = 1;
+  }
 }
 
 window.onload = () => {
-    setTimeout(typeLetter, 400);
+  setTimeout(typeLetter, 400);
 };
 document.querySelector(".math-toggle").onclick = () => {
-    const section = document.getElementById("math-section");
-    const label = document.querySelector(".math-toggle-text");
+  const section = document.getElementById("math-section");
+  const label = document.querySelector(".math-toggle-text");
 
-    if (section.style.display === "block") {
-        section.style.display = "none";
-        label.textContent = "▼ Show Mathematical Derivation";
-    } else {
-        section.style.display = "block";
-        label.textContent = "▲ Hide Mathematical Derivation";
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  if (section.style.display === "block") {
+    section.style.display = "none";
+    label.textContent = "▼ Show Mathematical Derivation";
+  } else {
+    section.style.display = "block";
+    label.textContent = "▲ Hide Mathematical Derivation";
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 };
 document.querySelector(".math-toggle1").onclick = () => {
-    const section = document.getElementById("math-section1");
-    const label = document.querySelector(".math-toggle-text1");
+  const section = document.getElementById("math-section1");
+  const label = document.querySelector(".math-toggle-text1");
 
-    if (section.style.display === "block") {
-        section.style.display = "none";
-        label.textContent = "▼ Show Derivation Of Gradients";
-    } else {
-        section.style.display = "block";
-        label.textContent = "▲ Hide Derivation Of Gradients";
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  if (section.style.display === "block") {
+    section.style.display = "none";
+    label.textContent = "▼ Show Derivation Of Gradients";
+  } else {
+    section.style.display = "block";
+    label.textContent = "▲ Hide Derivation Of Gradients";
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 };
 window.MathJax = {
-tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-svg: { fontCache: 'global' }
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
 };
 let loss = 1.0;
 const lossDisplay = document.getElementById("loss-number");
@@ -71,3 +71,40 @@ document.getElementById("train-toggle").onclick = () => {
   }
   trainingActive = !trainingActive;
 };
+
+// Water Ripple Effect Logic
+document.addEventListener('click', function (e) {
+  const ripple = document.createElement('div');
+  ripple.classList.add('ripple');
+  document.body.appendChild(ripple);
+
+  const size = 100; // Size of the ripple
+  ripple.style.width = ripple.style.height = `${size}px`;
+  ripple.style.left = `${e.clientX - size / 2}px`;
+  ripple.style.top = `${e.clientY - size / 2}px`;
+
+  ripple.addEventListener('animationend', () => {
+    ripple.remove();
+  });
+});
+
+// Scroll Reveal Logic (Optional enhancement)
+const observerOptions = {
+  threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = "1";
+      entry.target.style.transform = "translateY(0)";
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.diagram-box, .scene-box, .concept-box').forEach(el => {
+  el.style.opacity = "0";
+  el.style.transform = "translateY(30px)";
+  el.style.transition = "opacity 0.8s ease-out, transform 0.8s ease-out";
+  observer.observe(el);
+});
